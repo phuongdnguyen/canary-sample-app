@@ -1,0 +1,87 @@
+# Canary by 
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: my-app
+  labels:
+    app: my-app
+spec:
+  selector:
+    matchLabels:
+      app: my-app
+  replicas: 3
+  revisionHistoryLimit: 2
+  template:
+    metadata:
+      labels:
+        app: my-app
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9101"
+    spec:
+      containers:
+      - name: my-app
+      # Return error when ERROR_VERSION is equal to enabled
+        image: phuongnguyen1996/sample-app:0.0.1
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: probe
+          containerPort: 8086
+        - name: metrics
+          containerPort: 9101
+        env:
+        - name: VERSION
+          value: v0.0.1
+        - name: ERROR_VERSION
+          value: disabled
+        livenessProbe:
+          httpGet:
+            path: /live
+            port: probe
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: probe
+          periodSeconds: 5
+        resources:
+          requests:
+            cpu: 25m
+            memory: 50Mi
+          limits:
+            cpu: 150m
+            memory: 150Mi
+  strategy:
+    canary:
+      stableMetadata:
+        labels:
+          role: stable
+      canaryMetadata:
+        labels:
+          role: canary
+      steps:
+      - experiment:
+      #  the Experiment will wait until the duration has elapsed before completing the Experiment.
+          duration: 10m
+          templates:
+          - name: baseline
+            specRef: stable
+            replicas: 2
+          - name: canary
+            specRef: canary
+            replicas: 2
+          analyses:
+          - name: mann-whitney
+            templateName: mann-whitney
+            args:
+            - name: stable-hash
+              value: "{{templates.baseline.podTemplateHash}}"
+            - name: canary-hash
+              value: "{{templates.canary.podTemplateHash}}"
+            - name: start-time
+              value: "{{experiment.availableAt}}"
+            - name: end-time
+              value: "{{experiment.finishedAt}}"
+     
