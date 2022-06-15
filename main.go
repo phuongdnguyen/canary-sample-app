@@ -160,8 +160,6 @@ func serveMetrics(addr string) {
 
 func httpHandler(w http.ResponseWriter, r *http.Request) {
 	hostname, err := os.Hostname()
-	// min := 10
-	// max := 30
 	if err != nil {
 		fmt.Fprintf(w, "Error getting hostname\n")
 		return
@@ -169,10 +167,6 @@ func httpHandler(w http.ResponseWriter, r *http.Request) {
 	if os.Getenv("ERROR_VERSION") == "enabled" {
 		http.Error(w, "Critical error", http.StatusInternalServerError)
 	}
-	// if rand.Intn(max-min)+min > 20 {
-	// 	http.Error(w, "Random error", http.StatusInternalServerError)
-	// 	return
-	// }
 
 	fmt.Fprintf(w, "Host: %s, Version: %s\n", hostname, version)
 }
