@@ -32,7 +32,7 @@ spec:
           containerPort: 9101
         env:
         - name: VERSION
-          value: v0.0.5
+          value: v0.0.6
         - name: ERROR_VERSION
           value: disabled
         livenessProbe:
