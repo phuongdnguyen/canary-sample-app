@@ -63,34 +63,15 @@ spec:
           role: canary
       trafficRouting:
         istio:
-          virtualService: 
-            name: rollout-vsvc        # required
-            routes:
-            - primary                 # optional if there is a single route in VirtualService, required otherwise
-          destinationRule:
-            name: rollout-destrule    # required
-            canarySubsetName: canary  # required
-            stableSubsetName: stable  # required
-      # analysis:
-      #   templates:
-      #     - templateName: mann-whitney
-      #   startingStep: 2
-      #   args:
-      #       - name: stable-hash
-      #         valueFrom:
-      #           podTemplateHashValue: Stable
-      #       - name: canary-hash
-      #         valueFrom:
-      #           podTemplateHashValue: Latest
-      #       - name: start-time
-      #         value: "{{experiment.availableAt}}"
-      #       - name: end-time
-      #         value: "{{experiment.finishedAt}}"
+          # virtualService: 
+          #   name: rollout-vsvc        # required
+          #   routes:
+          #   - primary                 # optional if there is a single route in VirtualService, required otherwise
+          # destinationRule:
+          #   name: rollout-destrule    # required
+          #   canarySubsetName: canary  # required
+          #   stableSubsetName: stable  # required
       steps:
-      # - setWeight: 10
-      # - pause:
-      #     duration: 2m
-      # - setWeight: 20
       - experiment:
           duration: 10m
           templates:
