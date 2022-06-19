@@ -34,7 +34,7 @@ spec:
         - name: VERSION
           value: v0.0.1
         - name: ERROR_VERSION
-          value: disabled
+          value: enabled
         livenessProbe:
           httpGet:
             path: /live
