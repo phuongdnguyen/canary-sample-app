@@ -55,14 +55,14 @@ spec:
             memory: 150Mi
   strategy:
     canary:
-      stableMetadata:
-        labels:
-          role: stable
-      canaryMetadata:
-        labels:
-          role: canary
-      trafficRouting:
-        istio:
+      # stableMetadata:
+      #   labels:
+      #     role: stable
+      # canaryMetadata:
+      #   labels:
+      #     role: canary
+      # trafficRouting:
+      #   istio:
           # virtualService: 
           #   name: rollout-vsvc        # required
           #   routes:
