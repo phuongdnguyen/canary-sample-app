@@ -69,8 +69,8 @@ spec:
             - primary                 # optional if there is a single route in VirtualService, required otherwise
           destinationRule:
             name: rollout-destrule    # required
-            # canarySubsetName: canary  # required
-            # stableSubsetName: stable  # required
+            canarySubsetName: canary  # required
+            stableSubsetName: stable  # required
       # analysis:
       #   templates:
       #     - templateName: mann-whitney
@@ -96,12 +96,10 @@ spec:
           templates:
           - name: baseline
             specRef: stable
-            replicas: 2
-            weight: 20
+            weight: 10
           - name: canary
             specRef: canary
-            replicas: 2
-            weight: 20
+            weight: 10
           analyses:
           - name: mann-whitney
             templateName: mann-whitney
