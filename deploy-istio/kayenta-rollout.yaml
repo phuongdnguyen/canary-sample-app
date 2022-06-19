@@ -73,8 +73,7 @@ spec:
             stableSubsetName: stable  # required
       analysis:
         templates:
-          - name: mann-whitney
-            templateName: mann-whitney
+          - templateName: mann-whitney
         startingStep: 2
         args:
             - name: stable-hash
