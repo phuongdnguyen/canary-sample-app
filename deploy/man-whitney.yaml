@@ -19,8 +19,8 @@ spec:
         application: my-app
         canaryConfigName: canary-14
         metricsAccountName: canary-prometheus
-        configurationAccountName: your_account_name@gcp_project_id.iam.gserviceaccount.com
-        storageAccountName:  your_account_name@gcp_project_id.iam.gserviceaccount.com
+        configurationAccountName: phuonglab-dev-kayenta@inbound-ship-347911.iam.gserviceaccount.com
+        storageAccountName:  phuonglab-dev-kayenta@inbound-ship-347911.iam.gserviceaccount.com
         threshold:
           pass: 90
           marginal: 75
