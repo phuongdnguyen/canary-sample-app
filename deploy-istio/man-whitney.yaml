@@ -29,12 +29,12 @@ spec:
           controlScope:
             scope: rolloutspodtemplatehash="{{args.stable-hash}}"
             step: 60
-            # start: "{{args.start-time}}"
-            # end: "{{args.end-time}}"
+            start: "{{args.start-time}}"
+            end: "{{args.end-time}}"
             region: "asia-southeast1"
           experimentScope:
             scope: rolloutspodtemplatehash="{{args.canary-hash}}"
             step: 60
-            # start: "{{args.start-time}}"
-            # end: "{{args.end-time}}"
+            start: "{{args.start-time}}"
+            end: "{{args.end-time}}"
             region: "asia-southeast1"
