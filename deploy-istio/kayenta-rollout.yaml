@@ -32,7 +32,7 @@ spec:
           containerPort: 9101
         env:
         - name: VERSION
-          value: v0.0.3
+          value: v0.0.4
         - name: ERROR_VERSION
           value: disabled
         livenessProbe:
@@ -72,26 +72,35 @@ spec:
             canarySubsetName: canary  # required
             stableSubsetName: stable  # required
       steps:
-      - experiment:
+      - setWeight: 5
+      - pause:
           duration: 1m
-          templates:
-          - name: baseline
-            specRef: stable
-            weight: 5
-          - name: canary
-            specRef: canary
-            weight: 5
-          analyses:
-          - name: mann-whitney
-            templateName: mann-whitney
-            args:
-            - name: stable-hash
-              value: "{{templates.baseline.podTemplateHash}}"
-            - name: canary-hash
-              value: "{{templates.canary.podTemplateHash}}"
-            - name: start-time
-              value: "{{experiment.availableAt}}"
-            - name: end-time
-              value: "{{experiment.finishedAt}}"
+      - setWeight: 15
+      - pause:
+          duration: 1m
+      - setWeight: 20
+      - pause:
+          duration: 1m
+      # - experiment:
+      #     duration: 1m
+      #     templates:
+      #     - name: baseline
+      #       specRef: stable
+      #       weight: 5
+      #     - name: canary
+      #       specRef: canary
+      #       weight: 5
+      #     analyses:
+      #     - name: mann-whitney
+      #       templateName: mann-whitney
+      #       args:
+      #       - name: stable-hash
+      #         value: "{{templates.baseline.podTemplateHash}}"
+      #       - name: canary-hash
+      #         value: "{{templates.canary.podTemplateHash}}"
+      #       - name: start-time
+      #         value: "{{experiment.availableAt}}"
+      #       - name: end-time
+      #         value: "{{experiment.finishedAt}}"
 
      
