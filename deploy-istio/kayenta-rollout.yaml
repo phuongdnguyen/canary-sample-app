@@ -87,13 +87,21 @@ spec:
       #       - name: end-time
       #         value: "{{experiment.finishedAt}}"
       steps:
-      - setWeight: 10
-      - pause:
-          duration: 5m
-      - setWeight: 20
+      # - setWeight: 10
+      # - pause:
+      #     duration: 2m
+      # - setWeight: 20
       - experiment:
           duration: 10m
-          templates: []
+          templates:
+          - name: baseline
+            specRef: stable
+            replicas: 2
+            weight: 20
+          - name: canary
+            specRef: canary
+            replicas: 2
+            weight: 20
           analyses:
           - name: mann-whitney
             templateName: mann-whitney
