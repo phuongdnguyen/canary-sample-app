@@ -61,6 +61,8 @@ spec:
       canaryMetadata:
         labels:
           role: canary
+      canaryService: canary-svc  # required
+      stableService: stable-svc  # required
       trafficRouting:
         istio:
           virtualService: 

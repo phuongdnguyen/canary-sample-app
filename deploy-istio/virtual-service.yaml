@@ -1,20 +1,37 @@
+# apiVersion: networking.istio.io/v1alpha3
+# kind: VirtualService
+# metadata:
+#   name: rollout-vsvc
+# spec:
+#   # gateways:
+#   # - istio-rollout-gateway
+#   hosts:
+#   - istio-rollout.dev.argoproj.io
+#   http:
+#   - name: primary       # referenced in canary.trafficRouting.istio.virtualService.routes
+#     route:
+#     - destination:
+#         host: rollout-example
+#         subset: stable  # referenced in canary.trafficRouting.istio.destinationRule.stableSubsetName
+#       weight: 100
+#     - destination:
+#         host: rollout-example
+#         subset: canary  # referenced in canary.trafficRouting.istio.destinationRule.canarySubsetName
+#       weight: 0
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: rollout-vsvc
 spec:
-  # gateways:
-  # - istio-rollout-gateway
   hosts:
   - istio-rollout.dev.argoproj.io
   http:
-  - name: primary       # referenced in canary.trafficRouting.istio.virtualService.routes
+  - name: primary        # referenced in canary.trafficRouting.istio.virtualService.routes
     route:
     - destination:
-        host: rollout-example
-        subset: stable  # referenced in canary.trafficRouting.istio.destinationRule.stableSubsetName
+        host: stable-svc # referenced in canary.stableService
       weight: 100
     - destination:
-        host: rollout-example
-        subset: canary  # referenced in canary.trafficRouting.istio.destinationRule.canarySubsetName
+        host: canary-svc # referenced in canary.canaryService
       weight: 0
