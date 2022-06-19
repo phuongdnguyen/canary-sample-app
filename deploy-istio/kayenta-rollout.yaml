@@ -67,10 +67,10 @@ spec:
             name: rollout-vsvc        # required
             routes:
             - primary                 # optional if there is a single route in VirtualService, required otherwise
-          # destinationRule:
-          #   name: rollout-destrule    # required
-          #   canarySubsetName: canary  # required
-          #   stableSubsetName: stable  # required
+          destinationRule:
+            name: rollout-destrule    # required
+            canarySubsetName: canary  # required
+            stableSubsetName: stable  # required
       # analysis:
       #   templates:
       #     - templateName: mann-whitney
@@ -96,10 +96,10 @@ spec:
           templates:
           - name: baseline
             specRef: stable
-            weight: 10
+            weight: 5
           - name: canary
             specRef: canary
-            weight: 10
+            weight: 5
           analyses:
           - name: mann-whitney
             templateName: mann-whitney
