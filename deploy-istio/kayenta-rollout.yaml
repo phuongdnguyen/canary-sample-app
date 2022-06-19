@@ -32,7 +32,7 @@ spec:
           containerPort: 9101
         env:
         - name: VERSION
-          value: v0.0.2
+          value: v0.0.3
         - name: ERROR_VERSION
           value: disabled
         livenessProbe:
@@ -73,7 +73,7 @@ spec:
             stableSubsetName: stable  # required
       steps:
       - experiment:
-          duration: 10m
+          duration: 1m
           templates:
           - name: baseline
             specRef: stable
