@@ -1,0 +1,18 @@
+apiVersion: monitoring.googleapis.com/v1
+kind: PodMonitoring
+metadata:
+  name: my-app
+spec:
+  selector:
+    matchLabels:
+      app: my-app
+  endpoints:
+  - port: metrics
+    interval: 15s
+# retain role label when doing canary
+  targetLabels:
+    fromPod:
+    - from: role
+      to: role
+    - from: rollouts-pod-template-hash
+      to: rolloutspodtemplatehash

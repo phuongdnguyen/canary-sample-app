@@ -1,0 +1,7 @@
+resources:
+- ing.yaml
+- svc.yaml
+- analysis-template.yaml
+- gmp.yaml
+- man-whitney.yaml
+- kayenta-rollout.yaml
