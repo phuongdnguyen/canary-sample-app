@@ -63,8 +63,8 @@ spec:
           role: canary
       trafficRouting:
         istio:
-          # virtualService: 
-          #   name: rollout-vsvc        # required
+          virtualService: 
+            name: rollout-vsvc        # required
           #   routes:
           #   - primary                 # optional if there is a single route in VirtualService, required otherwise
           # destinationRule:
