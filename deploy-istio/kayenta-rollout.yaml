@@ -93,6 +93,7 @@ spec:
       - setWeight: 20
       - experiment:
           duration: 10m
+          templates: []
           analyses:
           - name: mann-whitney
             templateName: mann-whitney
