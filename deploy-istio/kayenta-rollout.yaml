@@ -71,11 +71,32 @@ spec:
             name: rollout-destrule    # required
             canarySubsetName: canary  # required
             stableSubsetName: stable  # required
-      analysis:
-        templates:
-          - templateName: mann-whitney
-        startingStep: 2
-        args:
+      # analysis:
+      #   templates:
+      #     - templateName: mann-whitney
+      #   startingStep: 2
+      #   args:
+      #       - name: stable-hash
+      #         valueFrom:
+      #           podTemplateHashValue: Stable
+      #       - name: canary-hash
+      #         valueFrom:
+      #           podTemplateHashValue: Latest
+      #       - name: start-time
+      #         value: "{{experiment.availableAt}}"
+      #       - name: end-time
+      #         value: "{{experiment.finishedAt}}"
+      steps:
+      - setWeight: 10
+      - pause:
+          duration: 5m
+      - setWeight: 20
+      - experiment:
+          duration: 10m
+          analyses:
+          - name: mann-whitney
+            templateName: mann-whitney
+            args:
             - name: stable-hash
               valueFrom:
                 podTemplateHashValue: Stable
@@ -86,11 +107,6 @@ spec:
               value: "{{experiment.availableAt}}"
             - name: end-time
               value: "{{experiment.finishedAt}}"
-      steps:
-      - setWeight: 10
-      - pause:
-          duration: 5m
-      - setWeight: 20
       - pause:
           duration: 5m
      
