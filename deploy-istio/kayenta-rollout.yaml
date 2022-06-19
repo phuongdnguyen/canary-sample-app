@@ -73,39 +73,25 @@ spec:
             stableSubsetName: stable  # required
       analysis:
         templates:
-        - templateName: error-rate
-        # delay starting analysis run until setWeight: 50%
+          - name: mann-whitney
+            templateName: mann-whitney
+            args:
+            - name: stable-hash
+              valueFrom:
+                podTemplateHashValue: Stable
+            - name: canary-hash
+              valueFrom:
+                podTemplateHashValue: Latest
+            - name: start-time
+              value: "{{experiment.availableAt}}"
+            - name: end-time
+              value: "{{experiment.finishedAt}}"
         startingStep: 2
-        args:
-        - name: service-name
-          value: my-app
       steps:
       - setWeight: 10
       - pause:
-          duration: 2m
+          duration: 5m
       - setWeight: 20
       - pause:
-          duration: 2m
-      # - experiment:
-      # #  the Experiment will wait until the duration has elapsed before completing the Experiment.
-      #     duration: 2m
-      #     templates:
-      #     - name: baseline
-      #       specRef: stable
-      #       replicas: 2
-      #     - name: canary
-      #       specRef: canary
-      #       replicas: 2
-      #     analyses:
-      #     - name: mann-whitney
-      #       templateName: mann-whitney
-      #       args:
-      #       - name: stable-hash
-      #         value: "{{templates.baseline.podTemplateHash}}"
-      #       - name: canary-hash
-      #         value: "{{templates.canary.podTemplateHash}}"
-      #       - name: start-time
-      #         value: "{{experiment.availableAt}}"
-      #       - name: end-time
-      #         value: "{{experiment.finishedAt}}"
+          duration: 5m
      
