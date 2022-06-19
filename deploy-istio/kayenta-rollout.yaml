@@ -32,7 +32,7 @@ spec:
           containerPort: 9101
         env:
         - name: VERSION
-          value: v0.0.2
+          value: v0.0.1
         - name: ERROR_VERSION
           value: disabled
         livenessProbe:
@@ -61,18 +61,16 @@ spec:
       canaryMetadata:
         labels:
           role: canary
-      canaryService: canary-svc  # required
-      stableService: stable-svc  # required
       trafficRouting:
         istio:
           virtualService: 
             name: rollout-vsvc        # required
-          #   routes:
-          #   - primary                 # optional if there is a single route in VirtualService, required otherwise
-          # destinationRule:
-          #   name: rollout-destrule    # required
-          #   canarySubsetName: canary  # required
-          #   stableSubsetName: stable  # required
+            routes:
+            - primary                 # optional if there is a single route in VirtualService, required otherwise
+          destinationRule:
+            name: rollout-destrule    # required
+            canarySubsetName: canary  # required
+            stableSubsetName: stable  # required
       steps:
       - experiment:
           duration: 10m
