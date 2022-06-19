@@ -1,0 +1,21 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: error-rate
+spec:
+  args:
+  - name: service-name
+  metrics:
+  - name: error-rate
+  # This is the interval between each poll to prometheus
+    interval: 15m
+    # NOTE: prometheus queries return results in the form of a vector.
+    # So it is common to access the index 0 of the returned array to obtain the value
+    successCondition: result[0] <= 0.1
+    failureLimit: 5
+    provider:
+      prometheus:
+        address: http://frontend.monitoring.svc:9090
+        query: |
+          sum by (job) (rate(http_requests_total{job =~ "{{args.service-name}}", code =~ "[45]..", role="canary"}[5m])) / sum by (job) (rate(http_requests_total{job =~ "{{args.service-name}}"}[5m]))

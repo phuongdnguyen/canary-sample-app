@@ -71,13 +71,24 @@ spec:
             name: rollout-destrule    # required
             canarySubsetName: canary  # required
             stableSubsetName: stable  # required
+      analysis:
+        templates:
+        - templateName: error-rate
+        # delay starting analysis run until setWeight: 50%
+        startingStep: 2
+        args:
+        - name: service-name
+          value: my-app
       steps:
-      - setWeight: 5
+      - setWeight: 10
       - pause:
-          duration: 10m
+          duration: 2m
+      - setWeight: 20
+      - pause:
+          duration: 2m
       # - experiment:
       # #  the Experiment will wait until the duration has elapsed before completing the Experiment.
-      #     duration: 10m
+      #     duration: 2m
       #     templates:
       #     - name: baseline
       #       specRef: stable
